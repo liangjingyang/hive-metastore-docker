@@ -1,12 +1,12 @@
 FROM openjdk:8-jre-slim as builder
 WORKDIR /opt
-ENV HADOOP_VERSION=3.3.1
-ENV METASTORE_VERSION=3.1.3
+ENV HADOOP_VERSION=3.2.0
+ENV METASTORE_VERSION=3.0.1
 ENV PSQL_CONN_VERSION=42.3.1
 ENV HADOOP_HOME=/opt/hadoop-${HADOOP_VERSION}
 ENV HIVE_HOME=/opt/apache-hive-metastore-${METASTORE_VERSION}-bin
-COPY apache-hive-metastore-3.1.3-bin.tar.gz .
-RUN tar zxf apache-hive-metastore-3.1.3-bin.tar.gz
+COPY apache-hive-metastore-${METASTORE_VERSION}-bin.tar.gz .
+RUN tar zxf apache-hive-metastore-${METASTORE_VERSION}-bin.tar.gz
 RUN apt update && \
     apt install -y curl && \
     curl -L https://archive.apache.org/dist/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz | tar zxf - && \
@@ -16,8 +16,8 @@ RUN apt update && \
 
 FROM openjdk:8-jre-slim as runner
 WORKDIR /opt
-ENV HADOOP_VERSION=3.3.1
-ENV METASTORE_VERSION=3.1.3
+ENV HADOOP_VERSION=3.2.0
+ENV METASTORE_VERSION=3.0.1
 ENV PSQL_CONN_VERSION=42.3.1
 ENV LOG4J_VERSION=2.16.0
 ENV HADOOP_HOME=/opt/hadoop-${HADOOP_VERSION}
@@ -32,4 +32,4 @@ RUN groupadd -r hive --gid=1000 && \
     chmod +x /entrypoint.sh
 USER hive
 EXPOSE 9083
-ENTRYPOINT ["sh" "-c" "/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]

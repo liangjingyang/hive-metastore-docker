@@ -1,7 +1,7 @@
 #!/bin/sh
 
-export HADOOP_VERSION=3.3.1
-export METASTORE_VERSION=3.1.3
+export HADOOP_VERSION=3.2.0
+export METASTORE_VERSION=3.0.1
 
 export JAVA_HOME=/usr/local/openjdk-8
 export HADOOP_HOME=/opt/hadoop-${HADOOP_VERSION}
